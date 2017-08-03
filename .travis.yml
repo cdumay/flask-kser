@@ -1,0 +1,15 @@
+language: python
+python:
+- 3.5
+install:
+- pip --version
+script:
+- python setup.py build
+deploy:
+  provider: pypi
+  user: cdumay
+  password:
+    secure: JEbFkQGO8lkOZcs1ZcOL2FsIDuVPuX+KYDTNbXf5nYj0Ys+z2OXQ6rrbCSc980gMXquRa3OhwakQEwCjuMxCVBRObdzX/b+F6JlpU3C159QEzL7Gd3nZmQo6lXC0iVo+SLZhc2HoJRhV0eu2Q9xvXUopaXCgCw5oNUzD94eP2XJdzlX6n21m/rR7ln4Je7BrM++0B+pCUuE4sp+2ENhSDf1QQkKXGrx8cMcldb6JfVgkuF3BDpbrVvAt1u0lDvc1jcHjWPyFGL6Iv36IzF+gMWlJrXB9LjwhKkZPskG0AcZxejafaCRTLOLdl/NEGK+WB3aJLPnFw2jtzGcPHkOkp5Ev+WoJXuCBOFvUHaoOuoOagQZp44pe1IqW6ISlKbwPjgJMQKe6E2gSHUK+ZGigQw9koFNhceItV7cbP4lFAdGhPIW56DjLDdqifYoTRTvdHoHH10vNi7ArMH+jfvJ6B1Ng9F0AL6NhUO4nb6x4y+PWdbaBqD4fOuKpDQMjIAjI9O8EDBhtYyDxa6Klo89QuFyhd5x5OGn9z+azZZKb3AFLbZPMSUqhiHmJeKhPvyrv6NWrcUt++ZQMwlxWU1trgfTWQv0IO4CkUY1ZTwv6iR2YzDogI94hMh3NVH7LUEL91r7Lq7Yh5pTbO71+n6n/EkAoIMBNGn6uaRL3h1qe9pM=
+  on:
+    tags: true
+    repo: cdumay/flask-kser

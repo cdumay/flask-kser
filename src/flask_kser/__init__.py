@@ -33,9 +33,7 @@ class FlaskKser(object):
         if "KSER_CONFIG" not in app.config:
             raise RuntimeError("KSER_CONFIG not found in app.config !")
 
-        for key, value in app.config['KSER_CONFIG'].items():
-            self.config[key.lower().replace('_', '.')] = value
-
+        self.config = rename_keys(app.config['KSER_CONFIG'])
         self.app = app
 
     @property

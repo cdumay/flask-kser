@@ -10,6 +10,16 @@ from kser.producer import Producer
 from kser.consumer import Consumer
 
 
+def rename_keys(data):
+    result = dict()
+    for key, value in data.items():
+        if isinstance(value, dict):
+            result[key.lower().replace('_', '.')] = rename_keys(value)
+        else:
+            result[key.lower().replace('_', '.')] = value
+    return result
+
+
 class FlaskKser(object):
     _kclient = None
 

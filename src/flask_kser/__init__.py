@@ -21,18 +21,21 @@ def rename_keys(data):
 class FlaskKser(object):
     _kclient = None
 
-    def __init__(self, kclient_class, app=None):
+    def __init__(self, kclient_class, app=None, config=None):
         self.app = None
         self.config = dict()
         self.kclient_class = kclient_class
         if app:
-            self.init_app(app)
+            self.init_app(app, config)
 
-    def init_app(self, app):
-        if "KSER_CONFIG" not in app.config:
-            raise RuntimeError("KSER_CONFIG not found in app.config !")
+    def init_app(self, app, config=None):
+        if config:
+            self.config = rename_keys(config)
+        else:
+            if "KSER_CONFIG" not in app.config:
+                raise RuntimeError("KSER_CONFIG not found in app.config !")
+            self.config = rename_keys(app.config['KSER_CONFIG'])
 
-        self.config = rename_keys(app.config['KSER_CONFIG'])
         self.app = app
 
     @property
@@ -59,8 +62,8 @@ class FlaskKserProducer(FlaskKser):
 
 
 class FlaskKserConsumer(FlaskKser):
-    def __init__(self, kclient_class, app=None, topics=None):
-        FlaskKser.__init__(self, kclient_class, app=app)
+    def __init__(self, kclient_class, app=None, config=None, topics=None):
+        FlaskKser.__init__(self, kclient_class, app=app, config=config)
         self.topics = topics or list()
 
     @property

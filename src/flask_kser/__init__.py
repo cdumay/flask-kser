@@ -6,8 +6,6 @@
 
 
 """
-from kser.producer import Producer
-from kser.consumer import Consumer
 
 
 def rename_keys(data):
@@ -23,9 +21,10 @@ def rename_keys(data):
 class FlaskKser(object):
     _kclient = None
 
-    def __init__(self, app=None):
+    def __init__(self, kclient_class, app=None):
         self.app = None
         self.config = dict()
+        self.kclient_class = kclient_class
         if app:
             self.init_app(app)
 
@@ -55,13 +54,13 @@ class FlaskKserProducer(FlaskKser):
         :rtype: kser.producer.Producer
         """
         if self._kclient is None:
-            self._kclient = Producer(self.config)
+            self._kclient = self.kclient_class(self.config)
         return self._kclient
 
 
 class FlaskKserConsumer(FlaskKser):
-    def __init__(self, app=None, topics=None):
-        FlaskKser.__init__(self, app=app)
+    def __init__(self, kclient_class, app=None, topics=None):
+        FlaskKser.__init__(self, kclient_class, app=app)
         self.topics = topics or list()
 
     @property
@@ -72,5 +71,5 @@ class FlaskKserConsumer(FlaskKser):
         :rtype: kser.consumer.Consumer
         """
         if self._kclient is None:
-            self._kclient = Consumer(self.config, self.topics)
+            self._kclient = self.kclient_class(self.config, self.topics)
         return self._kclient

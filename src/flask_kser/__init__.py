@@ -12,9 +12,9 @@ def rename_keys(data):
     result = dict()
     for key, value in data.items():
         if isinstance(value, dict):
-            result[key.lower().replace('_', '.')] = rename_keys(value)
+            result[key.lower()] = rename_keys(value)
         else:
-            result[key.lower().replace('_', '.')] = value
+            result[key.lower()] = value
     return result
 
 

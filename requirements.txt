@@ -1,2 +1,2 @@
-kser>=0.2
+kser
 flask
